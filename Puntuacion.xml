@@ -1,0 +1,24 @@
+<partida>
+    <jugador nombre = "">
+        <nivel></nivel>
+        <vida></vida>
+        <experiencia></experiencia>
+        <monedas></monedas>
+        <puntuacion></puntuacion>
+    </jugador>
+
+    <progreso>
+        <misionesCompletadas></misionesCompletadas>
+        <nivelDesbloqueado></nivelDesbloqueado>
+        <ultimoPuntoGuardado></ultimoPuntoGuardado>
+    </progreso>
+
+    <inventario>
+        <objeto cantidad=""></objeto>
+        <objeto cantidad=""></objeto>
+        <objeto cantidad=""></objeto>
+    </inventario>
+
+    <tiempoJugado></tiempoJugado>
+    <fechaGuardado></fechaGuardado>
+</partida>
