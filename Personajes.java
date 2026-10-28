@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+
 public class Personajes
 {
     //Atributos
+    private ArrayList<String> inventario = new ArrayList<>();
     private String nombre;
     private int vida;
     private int ataque;
@@ -84,11 +87,37 @@ public class Personajes
     }
 
     public void subirNivel(){
-        if (nivel == nivel +1){
-            vida = vida + 10;
-            ataque = ataque + 3;
-            defensa = defensa + 3;
-        }
+            nivel ++;
+            vida += 10;
+            ataque += 3;
+            defensa += 3;
+        
     }
 
+    public void curación(int curación){
+        vida += curación;
+    }
+
+    public void recibirDaño(int daño){
+        int dañoRecibido = Math.max(0, daño - defensa);
+        vida = Math.max(0, vida - dañoRecibido);
+    }
+
+    public boolean vivo(int vida){
+        boolean vivo;
+        if (vida == 0){
+            vivo = false;
+        } else {
+            vivo = true;
+        }
+        return vivo;
+    }
+
+    public void añadirObjeto(String objeto) {
+        inventario.add(objeto);
+    }
+
+    public void mostrarObjetos() {
+        System.out.println(inventario);
+    }
 }
