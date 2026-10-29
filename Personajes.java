@@ -18,12 +18,14 @@ public class Personajes
 
     }
 
-    public Personajes(String nombre)
+    
+
+    public Personajes(String nombre, int ataque, int defensa)
     {
         this.nombre = nombre;
         this.vida = 100;
         this.ataque = ataque;
-        this.nivel = nivel;
+        this.nivel = 1;
         this.defensa = defensa;
     }
 
