@@ -1,10 +1,10 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class Juego {
     public static void main(String[] args) {
 
         eleccionPersonaje();
-
     }
     
 
@@ -13,8 +13,10 @@ public class Juego {
         Scanner sc = new Scanner(System.in);
             System.out.println("Introduce Nombre");
             String nombre = sc.nextLine();
+            sc.close();    
             return nombre;
     }
+        
 
     static public void creacionGuerrero(){
         String nombre = nombre();
@@ -52,6 +54,43 @@ public class Juego {
             default:
                 System.out.println("No es valido");
                 break;
+        }
+    }
+
+    static public void generarSlime(){
+        Enemigos slime = new Enemigos("Slime", 40, 5, 0, 5);
+    }
+
+    static public void generarEsqueleto(){
+        Enemigos esqueleto = new Enemigos("Esqueleto", 60, 12, 4, 13);
+    }
+
+    static public void generarNoMuerto(){
+        Enemigos noMuerto = new Enemigos("No Muerto", 80, 19, 7, 23);
+    }
+
+    static public void encontrarSlime(){
+        Random random = new Random();
+        int probabilidadSlime = random.nextInt(3) + 1;
+        if(probabilidadSlime == 1){
+            generarSlime();
+        }
+        
+    }
+
+    static public void encontrarEsqueleto(){
+        Random random = new Random();
+        int probabilidadEsqueleto = random.nextInt(7) + 1;
+        if(probabilidadEsqueleto == 2){
+            generarEsqueleto();
+        }
+    }
+
+    static public void encontrarNoMuerto(){
+        Random random = new Random();
+        int probabilidadNoMuerto = random.nextInt(15) + 1;
+        if(probabilidadNoMuerto == 3){
+            generarNoMuerto();
         }
     }
 }

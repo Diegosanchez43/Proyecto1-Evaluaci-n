@@ -20,7 +20,16 @@ public class Personajes
 
     
 
-    public Personajes(String nombre, int ataque, int defensa)
+    public Personajes(String nombre, int ataque, int defensa, int vida)
+    {
+        this.nombre = nombre;
+        this.ataque = ataque;
+        this.nivel = 1;
+        this.defensa = defensa;
+        this.vida = vida;
+    }
+
+      public Personajes(String nombre, int ataque, int defensa)
     {
         this.nombre = nombre;
         this.vida = 100;
@@ -28,7 +37,6 @@ public class Personajes
         this.nivel = 1;
         this.defensa = defensa;
     }
-
 
     //getters / setters
 
@@ -96,13 +104,13 @@ public class Personajes
         
     }
 
-    public void curación(int curación){
-        vida += curación;
+    public void curación(int curacion){
+        vida += curacion;
     }
 
-    public void recibirDaño(int daño){
-        int dañoRecibido = Math.max(0, daño - defensa);
-        vida = Math.max(0, vida - dañoRecibido);
+    public void recibirDaño(int danyo){
+        int danyoRecibido = Math.max(0, danyo - defensa);
+        vida = Math.max(0, vida - danyoRecibido);
     }
 
     public boolean vivo(int vida){
