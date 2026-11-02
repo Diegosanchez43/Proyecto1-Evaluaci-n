@@ -4,7 +4,7 @@ public class Enemigos extends Personajes{
 
 
     public Enemigos(String nombre,int vida, int ataque, int defensa, int experiencia) {
-        super(nombre, ataque, defensa,vida);
+        super(nombre, ataque, defensa ,vida);
         this.experiencia = experiencia;
        
     }
@@ -24,7 +24,7 @@ public class Enemigos extends Personajes{
     public void mostrarDatos()
     {
         System.out.println("Nombre: " + getNombre());
-        System.out.println("Vida: " + getVida());
+        System.out.println("Vida: " + getVida() +"/" + getVidaMaxima());
     }
 
     
@@ -33,4 +33,5 @@ public class Enemigos extends Personajes{
          super.mostrarDatos();
          System.out.println("Experiencia: " + experiencia);
     }
+
 }

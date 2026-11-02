@@ -66,16 +66,30 @@ public class Objetos {
         this.danyo = danyo;
     }
 
-    public boolean usarCuracion(Personajes personajes) {
-        if (usos<=0){
-            return false;
+    public void usarCuracion(Personajes personajes) {
+        if (usosTotales() == true){
+            personajes.curacion(curacion);
+            usos--;
+        } else {
+            System.out.println("No puedes");
         }
-
-        personajes.curacion(curacion);
-        usos--;
-        return true;
 
     }
 
+    public void hacerDanyo(Enemigos enemigos) {
+        if (usosTotales() == true){
+            enemigos.recibirDanyo(danyo);
+            usos--;
+        } else {
+            System.out.println("No puedes");
+        }
+    }
+
+    public boolean usosTotales(){        
+        if (usos <=0){
+        return false;
+        } 
+        return true;
+    }
 
 }

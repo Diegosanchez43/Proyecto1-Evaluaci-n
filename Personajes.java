@@ -6,6 +6,7 @@ public class Personajes
     private ArrayList<String> inventario = new ArrayList<>();
     private String nombre;
     private int vida;
+    private int vidaMaxima;
     private int ataque;
     private int nivel;
     private int defensa;
@@ -27,12 +28,14 @@ public class Personajes
         this.nivel = 1;
         this.defensa = defensa;
         this.vida = vida;
+        this.vidaMaxima = vida;
     }
 
       public Personajes(String nombre, int ataque, int defensa)
     {
         this.nombre = nombre;
         this.vida = 100;
+        this.vidaMaxima = vida;
         this.ataque = ataque;
         this.nivel = 1;
         this.defensa = defensa;
@@ -57,6 +60,14 @@ public class Personajes
 
     public void setVida(int vida) {
         this.vida = vida;
+    }
+
+    public int getVidaMaxima(){
+        return vidaMaxima;
+    }
+
+    public void setVidaMaxima(){
+        this.vidaMaxima = vida;
     }
 
     public int getNivel() {
@@ -85,12 +96,10 @@ public class Personajes
 
     //Métodos
 
-
-
     public void mostrarDatos()
     {
         System.out.println("Nombre: " + nombre);
-        System.out.println("Vida: " + vida);
+        System.out.println("Vida: " + vidaMaxima + "/" + vida );
         System.out.println("Ataque: " + ataque);
         System.out.println("Nivel: " + nivel);
         System.out.println("Defensa: " + defensa);
@@ -98,17 +107,17 @@ public class Personajes
 
     public void subirNivel(){
             nivel ++;
-            vida += 10;
+            vidaMaxima += 10;
             ataque += 3;
             defensa += 3;
         
     }
 
-    public void curación(int curacion){
+    public void curacion(int curacion){
         vida += curacion;
     }
 
-    public void recibirDaño(int danyo){
+    public void recibirDanyo(int danyo){
         int danyoRecibido = Math.max(0, danyo - defensa);
         vida = Math.max(0, vida - danyoRecibido);
     }
