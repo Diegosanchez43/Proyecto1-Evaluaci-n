@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Personajes
 {
     //Atributos
-    private ArrayList<String> inventario = new ArrayList<>();
+    private ArrayList<Objetos> inventario = new ArrayList<>();
     private String nombre;
     private int vida;
     private int vidaMaxima;
@@ -13,12 +13,6 @@ public class Personajes
 
 
     //constructores
-
-    public Personajes()
-    {
-
-    }
-
     
 
     public Personajes(String nombre, int ataque, int defensa, int vida)
@@ -94,6 +88,16 @@ public class Personajes
         this.defensa = defensa;
     }
 
+    
+    public ArrayList<Objetos> getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(ArrayList<Objetos> inventario) {
+        this.inventario = inventario;
+    }
+
+
     //Métodos
 
     public void mostrarDatos()
@@ -115,6 +119,9 @@ public class Personajes
 
     public void curacion(int curacion){
         vida += curacion;
+        if (vida >vidaMaxima) {
+            vida = vidaMaxima;
+        }
     }
 
     public void recibirDanyo(int danyo){
@@ -132,11 +139,33 @@ public class Personajes
         return vivo;
     }
 
-    public void añadirObjeto(String objeto) {
+    public void añadirObjeto(Objetos objeto) {
         inventario.add(objeto);
     }
 
-    public void mostrarObjetos() {
-        System.out.println(inventario);
+    public void eliminarObjeto(Objetos objeto) {
+        inventario.remove(objeto);
     }
+
+    public void mostrarObjetos() {
+            System.out.println("Selecciona objeto");
+        if (inventario.isEmpty()) {
+            System.out.println("El inventario esta vacio ");
+            return;
+        }
+
+        for (int i = 0; i< inventario.size(); i++) {
+            Objetos objeto = inventario.get(i);
+            System.out.println((i + 1) + ". " + objeto.getNombre() + ": " + objeto.getUsos());
+            
+        }
+    }
+
+    public void mostrarVida(){
+        System.out.println(this.nombre + "Vida:" + vida + "/" + vidaMaxima);
+    }
+
+    
+
+    
 }

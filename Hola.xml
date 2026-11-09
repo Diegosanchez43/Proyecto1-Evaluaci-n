@@ -1,0 +1,17 @@
+<catalogo tienda="TechZone">
+    <producto id="P101" categoria="portatil" disponible="true">
+        <modelo>ZenBook 14</modelo>
+        <marca>Asus</marca>
+        <precio moneda="EUR">950</precio>
+    </producto>
+    <producto id="P102" categoria="smartphone" disponible="false">
+        <modelo>Galaxy S23</modelo>
+        <marca>Samsung</marca>
+        <precio moneda="EUR">820</precio>
+    </producto>
+    <producto id="P103" categoria="portatil" disponible="true">
+        <modelo>MacBook Air</modelo>
+        <marca>Apple</marca>
+        <precio moneda="EUR">1200</precio>
+    </producto>
+</catalogo>

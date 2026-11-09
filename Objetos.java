@@ -85,6 +85,10 @@ public class Objetos {
         }
     }
 
+    public void conseguir(int cantidad){
+        usos += cantidad;
+    }
+
     public boolean usosTotales(){        
         if (usos <=0){
         return false;

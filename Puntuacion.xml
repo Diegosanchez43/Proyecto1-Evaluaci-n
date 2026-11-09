@@ -1,10 +1,8 @@
 <partida>
-    <jugador nombre = "">
+    <jugador jugador = "1">
         <nivel></nivel>
         <vida></vida>
         <experiencia></experiencia>
-        <monedas></monedas>
-        <puntuacion></puntuacion>
     </jugador>
 
     <progreso>
