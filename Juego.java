@@ -28,6 +28,8 @@ public class Juego {
                     segunoPaso(cuchillo, pocion, jugador);
                     tercerPaso(jugador, bomba);
                     cuartoPaso(jugador, pocionMediana, pocionGrande);
+                    quintoPaso(jugador);
+                    fin();
                     
 
                     sc.close();
@@ -268,16 +270,6 @@ public class Juego {
         switch (opcion) {
             case "si":
                 if (probabilidad >= 2 ) {
-                    Enemigos enemigo = generarSlime();
-                    combate(jugador, enemigo);
-                }else{
-                    System.out.println("Encuentras un cuchillo ");
-                    cuchillo.conseguir(1);
-                }
-                break;
-            case "Si":
-                //Salta el sout
-                if (probabilidad >= 2 ) {
                     System.out.println("DEL COFRE SALE UN SLIME !");
                     System.out.println("      _______");
                     System.out.println("    /         \\");
@@ -294,7 +286,7 @@ public class Juego {
                 }
                 break;
             default:
-                System.out.println("No habres el cofre ");
+                System.out.println("No abres el cofre ");
                 break;
         }
 
@@ -341,34 +333,68 @@ public class Juego {
                         "El ambiente se vuelve cada vez más inquietante y ambos caminos parecen guardar sus propios secretos.\n" + //
                         "\n" + //
                         "¿Qué camino decides tomar: izquierda o derecha?");
-        String decision = sc.nextLine();
-        decision = decision.toLowerCase();               
+                 
             do {
-            switch (decision) {
-                case "izquierda":
-                    System.out.println("En el camino te encuentras una pocion mediana y un cuchillo arrojaizo,\n" + 
-                    "probablemente los recursos de quien ya se intento enfrentar a la presencia antes");
-                    pocionMEdiana.conseguir(1);
-                    System.out.println("aparece un slime ");
-                    enemigo = generarEsqueleto();
-                    validacion = true;
-                                    break;
+                String decision = sc.nextLine();
+                decision = decision.toLowerCase();    
+                switch (decision) {
+                    case "izquierda":
+                        System.out.println("En el camino te encuentras una pocion mediana y un cuchillo arrojaizo,\n" + 
+                        "probablemente los recursos de quien ya se intento enfrentar a la presencia antes");
+                        pocionMEdiana.conseguir(1);
+                        System.out.println("aparece un slime ");
+                        enemigo = generarEsqueleto();
+                        validacion = true;
+                                        break;
 
-                    case "derecha":
-                                    
-                    System.out.println("En el camino te encuentras una pocion grande\n" + 
-                    "probablemente los recursos de quien ya se intento enfrentar a la presencia antes");
-                    pocionGrande.conseguir(1);
-                    System.out.println("te encuentras un esqueleto");
-                    enemigo = generarEsqueleto();
-                    combate(jugador, enemigo);
-                    validacion = true;
-                    break;
-            }
+                        case "derecha":
+                                        
+                        System.out.println("En el camino te encuentras una pocion grande\n" + 
+                        "probablemente los recursos de quien ya se intento enfrentar a la presencia antes");
+                        pocionGrande.conseguir(1);
+                        System.out.println("te encuentras un esqueleto");
+                        enemigo = generarEsqueleto();
+                        combate(jugador, enemigo);
+                        validacion = true;
+                        break;
+                }
         } while (!validacion); {
             System.out.println("opcion no valida");
             return;
         }
+    }
+
+    public static void quintoPaso(Personajes jugador){
+        System.out.println("Tras elegir uno de los caminos, te adentras en el bosque, atravesando árboles cada vez más densos hasta llegar a un amplio claro. El silencio es absoluto y una extraña niebla cubre el suelo.\n" + //
+                        "\n" + //
+                        "En el centro del claro se encuentra una figura humanoide de aspecto aterrador. Su piel está pálida y desgastada, sus ropas parecen pertenecer a otra época y sus ojos desprenden un tenue brillo verdoso.\n" + //
+                        "\n" + //
+                        "Es un No Muerto.\n" + //
+                        "\n" + //
+                        "La criatura gira lentamente la cabeza hacia ti y comienza a caminar en tu dirección, arrastrando los pies por la hierba. Parece que llevaba tiempo esperándote.\n" + //
+                        "\n" + //
+                        "¡Un No Muerto ha aparecido! ¡Prepárate para combatir!");
+        Enemigos enemigo = generarNoMuerto();
+        combate(jugador, enemigo);
+
+    }
+
+    public static void fin() {
+        System.out.println("Tras un intenso combate, consigues derrotar al No Muerto. La criatura cae al suelo y sus huesos se esparcen por todo el claro.\n" + //
+                        "\n" + //
+                        "—¡JA! ¡Eso ha sido demasiado fácil! —exclamas, levantando los brazos en señal de victoria.\n" + //
+                        "\n" + //
+                        "Sin embargo, justo cuando te dispones a celebrar tu hazaña, escuchas un extraño ruido procedente de tu estómago. Tienes hambre.\n" + //
+                        "\n" + //
+                        "Decides sacar una de las monedas que encontraste anteriormente para comprar algo de comida... pero al intentar guardarla, se te cae al suelo.\n" + //
+                        "\n" + //
+                        "Te agachas para recogerla, pierdes el equilibrio, das tres vueltas sobre ti mismo y acabas golpeándote la cabeza contra el único árbol que había en todo el maldito claro.\n" + //
+                        "\n" + //
+                        "Caes al suelo completamente inmóvil.\n" + //
+                        "\n" + //
+                        "¡HAS MUERTO!\n" + //
+                        "\n" + //
+                        "Motivo de la muerte: el verdadero jefe final era la gravedad.");
     }
     
     
