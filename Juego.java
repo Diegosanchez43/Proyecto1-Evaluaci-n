@@ -14,7 +14,8 @@ public class Juego {
     public static void main(String[] args) {   
         System.out.println("Vienvenido jugador\n" +
                             "1:Jugar\n" +
-                            "2:salir"
+                            "2:salir\n" +
+                            "3:Normas"
         );
         
         boolean valido = false;
@@ -25,6 +26,9 @@ public class Juego {
                     Personajes jugador = eleccionPersonaje();
                     primerPaso(jugador);
                     segunoPaso(cuchillo, pocion, jugador);
+                    tercerPaso(jugador, bomba);
+                    cuartoPaso(jugador, pocionMediana, pocionGrande);
+                    
 
                     sc.close();
                     valido = true;
@@ -32,18 +36,23 @@ public class Juego {
                 case 2:
                     System.out.println("Hasta la proxima");
                     valido = true;
+                    System.exit(0);
                     break;
                 case 3:
                     System.out.println("Reglas:\n" +
-                                        "Elecciones basadas en texto y numeros depende de la ocasion\n" 
-
+                                        "Elecciones basadas en texto y numeros depende de la ocasion\n" +
+                                        "Combate por turnos\n" +
+                                        "Inventario accesible durante combates\n " +
+                                        "selecciona a un personaje enfrentate a multiples enemigos y vive como un autentico guerrero medieval\n"
                     );
+                    valido = true;
                 default:
                     break;
             }
         
         } while (valido); {
             System.out.println("opcion no valida");
+            return;
         }
     }    
 
@@ -53,10 +62,6 @@ public class Juego {
             String nombre = sc.nextLine();
            // sc.close();    
             return nombre;
-    }
-
-    public static void generarMain() {
-    
     }
         
 
@@ -85,17 +90,17 @@ public class Juego {
     }
 
     static public Objetos generarPocion(){
-         Objetos pocion = new Objetos("Pocion", 0, "Cura 10 de vida", 10);
+         Objetos pocion = new Objetos("Pocion", 0, "Cura 10 de vida", 20);
          return pocion;
     }
 
     static public Objetos generarPocionMediana(){
-         Objetos pocionMediana = new Objetos("Pocion mediana", 0, "Cura 30 de vida", 30);
+         Objetos pocionMediana = new Objetos("Pocion mediana", 0, "Cura 30 de vida", 40);
          return pocionMediana;
     }
 
     static public Objetos generarPocionGrande(){
-        Objetos pocionGrande = new Objetos("Pocion grande", 0, "Cura 60 de vida", 60);
+        Objetos pocionGrande = new Objetos("Pocion grande", 0, "Cura 60 de vida", 90);
         return pocionGrande;
     }
 
@@ -155,12 +160,12 @@ public class Juego {
     }
 
     static public Enemigos generarEsqueleto(){
-        Enemigos enemigo = new Enemigos("Esqueleto", 60, 16, 4, 13);
+        Enemigos enemigo = new Enemigos("Esqueleto", 75, 16, 4, 13);
         return enemigo;
     }
 
     static public Enemigos generarNoMuerto(){
-        Enemigos enemigo = new Enemigos("No Muerto", 80, 23, 7, 23);
+        Enemigos enemigo = new Enemigos("No Muerto", 120, 23, 7, 23);
         return enemigo;
     }
 
@@ -179,15 +184,17 @@ public class Juego {
             int opcion = sc.nextInt();
            // sc.nextLine();
 
+            boolean turnoConsumido = false;
             switch (opcion) {
                 case 1:
                     int vidaAnterior = enemigo.getVida();
                     enemigo.recibirDanyo(jugador.getAtaque());
                     System.out.println("Haces " + (vidaAnterior - enemigo.getVida()) + " de daño.");
+                    turnoConsumido = true;
                     break;
                 
                 case 2:
-                    usarInventario(jugador, enemigo);
+                    turnoConsumido = usarInventario(jugador, enemigo);
                     break;
 
                 default:
@@ -196,7 +203,7 @@ public class Juego {
                     
             }
             //sc.close();
-            if (enemigo.getVida() > 0 ) {
+            if (turnoConsumido == true && enemigo.getVida() > 0 ) {
                 int danyo = enemigo.getAtaque() - jugador.getDefensa();
                 if (danyo < 0 ) {
                     danyo = 0;
@@ -224,7 +231,14 @@ public class Juego {
         System.out.println("Al acercarte, descubres una pequeña criatura gelatinosa de color azul que te observa con dos grandes ojos negros.\n" + 
                         "—¡Plop!\n" +
                         "Es un Slime, una de las criaturas más comunes de estas tierras.");
-        pausa(1500);                
+        pausa(1500);
+        System.out.println("      _______");
+        System.out.println("    /         \\");
+        System.out.println("   /  o     o  \\");
+        System.out.println("  |      ^      |");
+        System.out.println("  |             |");
+        System.out.println("   \\___________/");
+        System.out.println("    ~~~~~~~~~~~");                
         Enemigos enemigo = new Enemigos(null, 0, 0, 0, 0);
         enemigo = generarSlime();
         combate(jugador, enemigo);
@@ -262,7 +276,16 @@ public class Juego {
                 }
                 break;
             case "Si":
+                //Salta el sout
                 if (probabilidad >= 2 ) {
+                    System.out.println("DEL COFRE SALE UN SLIME !");
+                    System.out.println("      _______");
+                    System.out.println("    /         \\");
+                    System.out.println("   /  o     o  \\");
+                    System.out.println("  |      ^      |");
+                    System.out.println("  |             |");
+                    System.out.println("   \\___________/");
+                    System.out.println("    ~~~~~~~~~~~");
                     Enemigos enemigo = generarSlime();
                     combate(jugador, enemigo);
                 }else{
@@ -275,13 +298,83 @@ public class Juego {
                 break;
         }
 
-        Enemigos enemigo = generarEsqueleto();
-        combate(jugador, enemigo);
-        
+       
     }
 
-    static public void usarInventario(Personajes jugador, Enemigos enemigo) {
-        Scanner sc = new Scanner(System.in);
+    public static void tercerPaso(Personajes jugador, Objetos bomba){
+        System.out.println("Te acercas al cofre para examinarlo con más detalle. Su madera está desgastada por el paso del tiempo y algunos símbolos extraños decoran su tapa. Mientras decides qué hacer, escuchas un crujido justo detrás de él.\n" + //
+                        "\n" + //
+                        "De repente, unos huesos comienzan a levantarse del suelo hasta formar una figura humanoide. ¡Un esqueleto! La criatura sostiene una espada oxidada y sus cuencas vacías brillan con una tenue luz roja.\n" + //
+                        "\n" + //
+                        "Sin darte tiempo a reaccionar, el esqueleto se coloca frente a ti, bloqueando el camino. El pequeño Slime retrocede asustado mientras la criatura levanta su espada.\n" + //
+                        "\n" + //
+                        "¡Un enemigo ha aparecido! ¡Prepárate para combatir!");
+                        
+        System.out.println("       .-'''''''-.");
+        System.out.println("     .'           '.");
+        System.out.println("    /               \\");
+        System.out.println("   |   .---. .---.  |");
+        System.out.println("   |  /     V     \\ |");
+        System.out.println("   |  \\           / |");
+        System.out.println("   |    --/   \\--   |");
+        System.out.println("   |        ^       |");
+        System.out.println("   |       / \\      |");
+        System.out.println("    \\              /");
+        System.out.println("     '.          .'");
+        System.out.println("       |         |");
+        System.out.println("       | | | | | |");
+        System.out.println("       | | | | | |");
+        System.out.println("       |_|_|_|_|_|");
+                Enemigos enemigo = generarEsqueleto();
+        combate(jugador, enemigo);
+                System.out.println("Al acabar con el esqueleto ves como deja caer una bomba");
+                bomba.conseguir(1);
+    }
+
+    public static void cuartoPaso(Personajes jugador, Objetos pocionMEdiana, Objetos pocionGrande){
+        Enemigos enemigo;
+        boolean validacion = false;
+        System.out.println("Tras continuar tu camino por el bosque, llegas a una bifurcación con dos senderos diferentes. El de la izquierda parece adentrarse en una zona oscura y frondosa, mientras que el de la derecha conduce hacia unas antiguas ruinas de piedra.\n" + //
+                        "\n" + //
+                        "De repente, sientes una extraña presencia que parece provenir de más adelante. No sabes qué es, pero tienes la sensación de que algo poderoso se esconde en algún lugar del bosque.\n" + //
+                        "\n" + //
+                        "El ambiente se vuelve cada vez más inquietante y ambos caminos parecen guardar sus propios secretos.\n" + //
+                        "\n" + //
+                        "¿Qué camino decides tomar: izquierda o derecha?");
+        String decision = sc.nextLine();
+        decision = decision.toLowerCase();               
+            do {
+            switch (decision) {
+                case "izquierda":
+                    System.out.println("En el camino te encuentras una pocion mediana y un cuchillo arrojaizo,\n" + 
+                    "probablemente los recursos de quien ya se intento enfrentar a la presencia antes");
+                    pocionMEdiana.conseguir(1);
+                    System.out.println("aparece un slime ");
+                    enemigo = generarEsqueleto();
+                    validacion = true;
+                                    break;
+
+                    case "derecha":
+                                    
+                    System.out.println("En el camino te encuentras una pocion grande\n" + 
+                    "probablemente los recursos de quien ya se intento enfrentar a la presencia antes");
+                    pocionGrande.conseguir(1);
+                    System.out.println("te encuentras un esqueleto");
+                    enemigo = generarEsqueleto();
+                    combate(jugador, enemigo);
+                    validacion = true;
+                    break;
+            }
+        } while (!validacion); {
+            System.out.println("opcion no valida");
+            return;
+        }
+    }
+    
+    
+
+
+    static public boolean usarInventario(Personajes jugador, Enemigos enemigo) {
         ArrayList<Objetos> inventario = jugador.getInventario();
 
         jugador.mostrarObjetos();
@@ -289,28 +382,32 @@ public class Juego {
         int seleccion = sc.nextInt();
 
         if (seleccion == 0) {
-            return;
+            return false;
         }
         if (seleccion < 1 || seleccion > inventario.size()) {
             System.out.println("Selección no válida. ");
-            return;
+            return false;
         }
 
         Objetos objeto = inventario.get(seleccion - 1);
 
         if (!objeto.usosTotales()) {
             System.out.println("No te quedan " + objeto.getNombre());
-            return;
+            return false;
         }
 
+        boolean objetoUsado = false;
         if (objeto.getCuracion() > 0) {
             objeto.usarCuracion(jugador);
+            objetoUsado = true;
         }
 
         if (objeto.getDanyo() > 0) {
             objeto.hacerDanyo(enemigo);
+            objetoUsado = true;
         }
 
+        return objetoUsado;
     }
 
     static void pausa(int milisegundos) {
