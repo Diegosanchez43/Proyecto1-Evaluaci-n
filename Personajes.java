@@ -10,6 +10,7 @@ public class Personajes
     private int ataque;
     private int nivel;
     private int defensa;
+    private int experiencia;
 
 
     //constructores
@@ -68,6 +69,14 @@ public class Personajes
         return nivel;
     }
 
+    public int getExperiencia() {
+        return experiencia;
+    }
+
+    public void añadirExperiencia(int experiencia) {
+        this.experiencia += experiencia;
+    }
+
     public void setNivel(int nivel) {
         this.nivel = nivel;
     }
@@ -107,6 +116,7 @@ public class Personajes
         System.out.println("Ataque: " + ataque);
         System.out.println("Nivel: " + nivel);
         System.out.println("Defensa: " + defensa);
+        System.out.println("Experiencia: " + experiencia);
     }
 
     public void subirNivel(){
@@ -114,6 +124,7 @@ public class Personajes
             vidaMaxima += 10;
             ataque += 3;
             defensa += 3;
+            mostrarDatos();
         
     }
 

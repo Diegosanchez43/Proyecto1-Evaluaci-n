@@ -43,7 +43,7 @@ public class Juego {
                     pausa(1200);
                     quintoPaso(jugador);
                     pausa(1200);
-                    fin();
+                    fin(jugador);
                     
 
                     sc.close();
@@ -209,8 +209,9 @@ public class Juego {
         return enemigo;
     }
 
-    static public void combate(Personajes jugador, Enemigos enemigo){
+    static public int combate(Personajes jugador, Enemigos enemigo){
         //Scanner sc = new Scanner(System.in);
+        int experiencia;
 
         System.out.println("\n====================================");
         System.out.println("       COMBATE: " + enemigo.getNombre().toUpperCase());
@@ -274,7 +275,10 @@ public class Juego {
         if(jugador.getVida() > 0) {
             System.out.println("\n====================================");
             System.out.println("      " + enemigo.getNombre().toUpperCase() + " DERROTADO");
+            System.out.println("consiges " + enemigo.getExperiencia() + " Experiencia");
             System.out.println("====================================");
+            
+            
             pausa(1000);
         } else {
             System.out.println("\n====================================");
@@ -282,6 +286,9 @@ public class Juego {
             System.out.println("====================================");
             System.exit(0);
         }
+        experiencia =+ enemigo.getExperiencia();
+        return experiencia;
+        
     }
 
     static public void primerPaso(Personajes jugador) {
@@ -304,7 +311,7 @@ public class Juego {
         System.out.println("    ~~~~~~~~~~~");                
         Enemigos enemigo = new Enemigos(null, 0, 0, 0, 0);
         enemigo = generarSlime();
-        combate(jugador, enemigo);
+        nivel(jugador, combate(jugador, enemigo));
         
     }
 
@@ -344,7 +351,7 @@ public class Juego {
                     System.out.println("   \\___________/");
                     System.out.println("    ~~~~~~~~~~~");
                     Enemigos enemigo = generarSlime();
-                    combate(jugador, enemigo);
+                    nivel(jugador, combate(jugador, enemigo));
                 }else{
                     System.out.println("Encuentras un cuchillo ");
                     pausa(700);
@@ -386,7 +393,7 @@ public class Juego {
         System.out.println("       |_|_|_|_|_|");
         pausa(700);
                 Enemigos enemigo = generarEsqueleto();
-        combate(jugador, enemigo);
+        nivel(jugador, combate(jugador, enemigo));
                 System.out.println("Al acabar con el esqueleto ves como deja caer una bomba");
                 pausa(800);
                 bomba.conseguir(1);
@@ -415,7 +422,16 @@ public class Juego {
                         pocionMEdiana.conseguir(1);
                         System.out.println("aparece un slime ");
                         pausa(700);
-                        enemigo = generarEsqueleto();
+                        System.out.println("      _______");
+                        System.out.println("    /         \\");
+                        System.out.println("   /  o     o  \\");
+                        System.out.println("  |      ^      |");
+                        System.out.println("  |             |");
+                        System.out.println("   \\___________/");
+                        System.out.println("    ~~~~~~~~~~~");
+                        enemigo = generarSlime();
+
+                        nivel(jugador, combate(jugador, enemigo));
                         validacion = true;
                                         break;
 
@@ -427,8 +443,24 @@ public class Juego {
                         pocionGrande.conseguir(1);
                         System.out.println("te encuentras un esqueleto");
                         pausa(700);
+                         pausa(1000);
+                        System.out.println("       .-'''''''-.");
+                        System.out.println("     .'           '.");
+                        System.out.println("    /               \\");
+                        System.out.println("   |   .---. .---.  |");
+                        System.out.println("   |  /     V     \\ |");
+                        System.out.println("   |  \\           / |");
+                        System.out.println("   |    --/   \\--   |");
+                        System.out.println("   |        ^       |");
+                        System.out.println("   |       / \\      |");
+                        System.out.println("    \\              /");
+                        System.out.println("     '.          .'");
+                        System.out.println("       |         |");
+                        System.out.println("       | | | | | |");
+                        System.out.println("       | | | | | |");
+                        System.out.println("       |_|_|_|_|_|");
                         enemigo = generarEsqueleto();
-                        combate(jugador, enemigo);
+                        nivel(jugador, combate(jugador, enemigo));
                         validacion = true;
                         break;
                 }
@@ -450,11 +482,11 @@ public class Juego {
                         "¡Un No Muerto ha aparecido! ¡Prepárate para combatir!");
         pausa(1200);
         Enemigos enemigo = generarNoMuerto();
-        combate(jugador, enemigo);
+        nivel(jugador, combate(jugador, enemigo));
 
     }
 
-    public static void fin() {
+    public static void fin(Personajes jugador) {
         System.out.println("Tras un intenso combate, consigues derrotar al No Muerto. La criatura cae al suelo y sus huesos se esparcen por todo el claro.\n" + //
                         "\n" + //
                         "—¡JA! ¡Eso ha sido demasiado fácil! —exclamas, levantando los brazos en señal de victoria.\n" + //
@@ -474,6 +506,7 @@ public class Juego {
                         "¡HAS MUERTO!\n" + //
                         "\n" + //
                         "Motivo de la muerte: el verdadero jefe final era la gravedad.");
+                        jugador.mostrarDatos();
     }
     
     
@@ -520,6 +553,26 @@ public class Juego {
             Thread.sleep(milisegundos);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+        }
+     }
+
+     static public void nivel(Personajes jugador, int experiencia){
+        int experienciaFake = experiencia;
+        if (experienciaFake >= 6 && experienciaFake < 13 ){
+            experienciaFake = 6;
+        }
+        if (experienciaFake >= 13 && experienciaFake < 22 ){
+            experienciaFake = 13;
+        }
+        if (experienciaFake >= 22 && experienciaFake < 32 ){
+            experienciaFake = 22;
+        }
+        if (experienciaFake >= 32 ){
+            experienciaFake = 32;
+        }
+
+        if (experienciaFake == 6 || experienciaFake == 13 || experienciaFake == 22 || experienciaFake == 32) {
+            jugador.subirNivel();
         }
      }
 
