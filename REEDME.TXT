@@ -1,0 +1,86 @@
+Aventura en Eldoria es un juego de rol (RPG) de texto desarrollado en Java y ejecutado desde la consola. El jugador escoge un personaje, explora un reino de fantasía, toma decisiones, combate contra enemigos y utiliza objetos. Al terminar una partida (o morir durante un combate), su resultado se registra en un ranking almacenado en XML y representado en HTML.
+Características principales
+- Selección de personajes: Guerrero, Mago y Vagabundo, además de una opción especial oculta.
+- Historia interactiva ambientada en Eldoria, con encuentros y elecciones de caminos.
+- Combates por turnos: atacar o utilizar objetos del inventario.
+- Enemigos con atributos de vida, ataque, defensa y recompensa de experiencia.
+- Objetos consumibles de curación y daño: pociones, cuchillo arrojadizo y bomba.
+- Sistema de niveles y estadísticas de personaje.
+- Registro de partidas en un archivo XML y creación de un ranking HTML ordenado por experiencia.
+Tecnologías utilizadas
+- Java: lógica del juego, personajes, enemigos, inventario y archivos.
+- DOM (Java): lectura y escritura del archivo XML.
+- XML: almacenamiento persistente de los resultados.
+- HTML y CSS: presentación del ranking en el navegador.
+- XSLT: hoja de estilo incluida para transformar el XML en HTML, aunque la generación del archivo ranking.html se realiza directamente desde Java en la implementación actual.
+Estructura del proyecto
+Aventura-en-Eldoria/
+├── Juego.java         # Clase principal y desarrollo de la aventura
+├── Personajes.java    # Personajes, estadísticas, inventario y niveles
+├── Enemigos.java      # Enemigos y experiencia que proporcionan
+├── Objetos.java       # Objetos de curación y ataque
+├── hacerXML.java      # Creación, lectura y escritura del ranking XML/HTML
+├── ranking.xml        # Ejemplo de ranking suministrado
+├── ranking.xslt       # Hoja XSLT para visualizar el ranking XML
+└── README.md          # Documentación del proyecto
+Importante: el archivo principal entregado se llama Juego(1).java. Para compilarlo debe renombrarse a Juego.java, ya que contiene la clase pública Juego.
+
+Requisitos
+- JDK 17 o superior, debido al uso de Random.nextInt(int origin, int bound).
+- Terminal o consola de comandos.
+- Un navegador web para abrir el ranking HTML.
+No se requieren bibliotecas externas: el programa usa herramientas de la biblioteca estándar de Java.
+Instalación y ejecución
+1. Coloca todos los archivos .java en una misma carpeta y renombra Juego(1).java a Juego.java.
+2. Abre una terminal en esa carpeta.
+3. Compila las clases:
+   javac Juego.java Personajes.java Enemigos.java Objetos.java hacerXML.java
+4. Ejecuta el programa:
+   java Juego
+5. Sigue las instrucciones que aparecen en pantalla.
+Menú inicial
+Opción	Función
+1	Iniciar una partida
+2	Salir del juego
+3	Leer las normas
+4	Consultar las partidas registradas por consola
+
+
+Durante los combates se puede atacar o usar un objeto del inventario. Las decisiones de la historia se introducen siguiendo las opciones indicadas en la consola.
+Clases principales
+Juego.java
+Es el punto de entrada (main) del programa. Contiene el menú, la selección de personaje, los distintos pasos de la historia, el sistema de combate, el uso del inventario, la subida de nivel y las llamadas para guardar resultados.
+Personajes.java
+Representa al jugador y sus características: nombre, vida, vida máxima, ataque, defensa, nivel, experiencia e inventario. Incluye métodos para recibir daño, curarse, subir de nivel y mostrar sus datos y objetos.
+Enemigos.java
+Hereda de Personajes y añade la experiencia que proporciona cada enemigo. En el juego aparecen Slime, Esqueleto y No Muerto.
+Objetos.java
+Gestiona los objetos disponibles, sus usos y sus efectos. Incluye métodos para conseguir unidades, curar al personaje y causar daño a los enemigos.
+hacerXML.java
+Se encarga de gestionar el ranking:
+- crearXML(): crea el archivo si no existe y genera el HTML.
+- guardarXML(): lee las partidas almacenadas y las muestra por consola.
+- escribirXML(nombre, puntosPartida): añade una partida con el nombre del jugador y su experiencia.
+- generarHTML(): genera ranking.html ordenando los resultados por experiencia, de mayor a menor.
+Sistema de ranking
+El programa utiliza un archivo ranking.XML con una estructura como la siguiente:
+<?xml version="1.0" encoding="UTF-8"?>
+<ranking>
+    <partida id="1">
+        <nombre>Jugador1</nombre>
+        <experiencia>23</experiencia>
+    </partida>
+</ranking>
+Cada elemento <partida> contiene un identificador, el nombre del jugador y la experiencia registrada. Tras añadir una partida, Java actualiza el archivo ranking.html, con las columnas Posición, Jugador y Experiencia. El HTML se puede abrir con un navegador.
+
+El archivo ranking.xslt es una alternativa para presentar el XML directamente en formato de tabla, aunque actualmente tiene una celda menos de las previstas en su encabezado (no muestra el nombre del jugador).
+Consideraciones sobre la versión entregada
+Estos puntos describen el estado actual del código; no se han corregido los archivos originales:
+1. Mayúsculas del XML: hacerXML.java utiliza ranking.XML, pero el archivo adjunto se llama ranking.xml. En sistemas sensibles a mayúsculas/minúsculas se consideran archivos diferentes. Conviene usar exactamente el mismo nombre.
+2. Nombre del archivo Java: renombrar Juego(1).java a Juego.java antes de compilar.
+3. Experiencia acumulada: el método combate() asigna puntosPartida = experiencia y utiliza experiencia =+ enemigo.getExperiencia(). Por tanto, la puntuación se sobrescribe en lugar de acumular necesariamente toda la experiencia ganada.
+4. Menú: el bucle y la variable valido de main pueden provocar un comportamiento no esperado al consultar normas o ranking. La opción 4 también carece de break explícito.
+5. Nombre del jugador: al mezclar nextInt() y nextLine() puede recogerse una línea vacía como nombre.
+6. Visualización XSLT: ranking.xslt contiene cabeceras para tres columnas, pero las filas actualmente solo generan dos celdas.
+7. Ranking incluido: el ejemplo de ranking.xml contiene una partida con experiencia 23 y el campo nombre vacío.
+Estos aspectos conviene revisarlos antes de presentar el juego como versión definitiva.
