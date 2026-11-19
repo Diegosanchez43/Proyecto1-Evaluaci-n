@@ -10,8 +10,30 @@ public class Juego {
     static Objetos pocionGrande = generarPocionGrande();       
     static Objetos cuchillo = generarCuchillo();       
     static Objetos bomba = generarBomba();  
+    static int puntosPartida;
+    static int nivelSubidos;
     
+
+    
+    public static int getPuntosPartida() {
+        return puntosPartida;
+    }
+
+    public static void setPuntosPartida(int puntosPartida) {
+        Juego.puntosPartida = puntosPartida;
+    }
+
+    public static int getNivelSubidos() {
+        return nivelSubidos;
+    }
+
+    public static void setNivelSubidos(int nivelSubidos) {
+        Juego.nivelSubidos = nivelSubidos;
+    }
+    
+
     public static void main(String[] args) {
+        hacerXML.crearXML();
         System.out.println("====================================");
         System.out.println("       AVENTURA EN ELDORIA");
         System.out.println("====================================");
@@ -21,6 +43,7 @@ public class Juego {
         System.out.println("  1. Jugar");
         System.out.println("  2. Salir");
         System.out.println("  3. Leer las normas");
+        System.out.println("  4. ver ranking");
         System.out.println();
         System.out.print("Elige una opcion: ");
         
@@ -29,6 +52,7 @@ public class Juego {
             int menu = sc.nextInt();
             switch (menu) {
                 case 1:
+                    puntosPartida = 0;
                     System.out.println("\nPreparando tu aventura...");
                     pausa(1000);
                     Personajes jugador = eleccionPersonaje();
@@ -44,6 +68,7 @@ public class Juego {
                     quintoPaso(jugador);
                     pausa(1200);
                     fin(jugador);
+                    hacerXML.escribirXML(jugador.getNombre(), puntosPartida);
                     
 
                     sc.close();
@@ -65,6 +90,10 @@ public class Juego {
                     System.out.println("-----------------------------------\n");
                     pausa(700);
                     valido = true;
+                    break;
+                case 4:
+                    hacerXML.guardarXML();
+                    valido = true;
                 default:
                     break;
             }
@@ -75,7 +104,7 @@ public class Juego {
         }
     }    
 
-    static public String nombre(){
+    public static String nombre(){
        // Scanner sc = new Scanner(System.in);
             System.out.println("Introduce Nombre");
             String nombre = sc.nextLine();
@@ -84,7 +113,7 @@ public class Juego {
     }
         
 
-    static public Personajes creacionGuerrero(){
+    public static Personajes creacionGuerrero(){
         String nombre = nombre();
         Personajes jugador = new Personajes(nombre, 12, 10);
         jugador.mostrarDatos();
@@ -92,7 +121,7 @@ public class Juego {
         return jugador;
     }
 
-    static public Personajes creacionMago(){
+    public static Personajes creacionMago(){
         String nombre = nombre();
         Personajes jugador = new Personajes(nombre, 18, 5);
         jugador.mostrarDatos();
@@ -100,7 +129,7 @@ public class Juego {
         return jugador;
     }
 
-    static public Personajes creacionVagabundo(){
+    public static Personajes creacionVagabundo(){
         String nombre = nombre();
         Personajes jugador = new Personajes(nombre, 10, 2);
         jugador.mostrarDatos();
@@ -108,7 +137,7 @@ public class Juego {
         return jugador;
     }
 
-    static public Personajes creacionDemonio(){
+    public static Personajes creacionDemonio(){
         System.out.println("En las profundidades del Infierno, donde las llamas nunca se apagan y los gritos resuenan eternamente, una antigua puerta comienza a abrirse. De entre las sombras emerge una figura demoníaca, con enormes cuernos, ojos carmesí y un aura que desprende un poder aterrador.\n");
         pausa(1000);
         System.out.println("Tras siglos de encierro, finalmente has conseguido escapar.\n");
@@ -125,32 +154,32 @@ public class Juego {
         return jugador;
     } 
 
-    static public Objetos generarPocion(){
+    public static Objetos generarPocion(){
          Objetos pocion = new Objetos("Pocion", 0, "Cura 10 de vida", 20);
          return pocion;
     }
 
-    static public Objetos generarPocionMediana(){
+    public static Objetos generarPocionMediana(){
          Objetos pocionMediana = new Objetos("Pocion mediana", 0, "Cura 30 de vida", 40);
          return pocionMediana;
     }
 
-    static public Objetos generarPocionGrande(){
+    public static Objetos generarPocionGrande(){
         Objetos pocionGrande = new Objetos("Pocion grande", 0, "Cura 60 de vida", 90);
         return pocionGrande;
     }
 
-    static public Objetos generarCuchillo(){
+    public static Objetos generarCuchillo(){
         Objetos cuchillo = new Objetos("Cuchillo arrojadizo", "Lnzalo para hacer 25 de daño", 0, 25);
         return cuchillo;
     }
 
-    static public Objetos generarBomba(){
+    public static Objetos generarBomba(){
         Objetos bomba = new Objetos ("Bomba", "Lanzala para causar 60 de daño ", 0, 60);
         return bomba;
     }
 
-    static public void generarInventario(Personajes jugador){       
+    public static void generarInventario(Personajes jugador){       
         jugador.añadirObjeto(pocion);       
         jugador.añadirObjeto(pocionMediana);       
         jugador.añadirObjeto(pocionGrande);        
@@ -158,7 +187,7 @@ public class Juego {
         jugador.añadirObjeto(bomba);
     }
 
-    static public Personajes eleccionPersonaje(){
+    public static Personajes eleccionPersonaje(){
        // Scanner sc = new Scanner(System.in);
         Personajes jugador = new Personajes(null, 0, 0);
         System.out.println("Selecciona el personaje: Guerrero-1, Mago-2, Vagabundo-3");
@@ -194,22 +223,22 @@ public class Juego {
         
     }
 
-    static public Enemigos generarSlime(){
+    public static Enemigos generarSlime(){
         Enemigos enemigo = new Enemigos("Slime", 40, 9, 0, 5);
         return enemigo;
     }
 
-    static public Enemigos generarEsqueleto(){
+    public static Enemigos generarEsqueleto(){
         Enemigos enemigo = new Enemigos("Esqueleto", 75, 16, 4, 13);
         return enemigo;
     }
 
-    static public Enemigos generarNoMuerto(){
+    public static Enemigos generarNoMuerto(){
         Enemigos enemigo = new Enemigos("No Muerto", 120, 23, 7, 23);
         return enemigo;
     }
 
-    static public int combate(Personajes jugador, Enemigos enemigo){
+    public static int combate(Personajes jugador, Enemigos enemigo){
         //Scanner sc = new Scanner(System.in);
         int experiencia;
 
@@ -284,14 +313,16 @@ public class Juego {
             System.out.println("\n====================================");
             System.out.println("             HAS MUERTO");
             System.out.println("====================================");
+            hacerXML.escribirXML(jugador.getNombre(), puntosPartida);
             System.exit(0);
         }
         experiencia =+ enemigo.getExperiencia();
+        puntosPartida = experiencia;
         return experiencia;
         
     }
 
-    static public void primerPaso(Personajes jugador) {
+    public static void primerPaso(Personajes jugador) {
         
         System.out.println("Despiertas en una fría celda de piedra, sin recordar cómo has llegado allí. A tu alrededor solo hay barrotes oxidados, humedad y un silencio inquietante. Tras explorar un poco, descubres que la puerta está abierta. Sin pensarlo demasiado, sales de la prisión y recorres sus oscuros pasillos hasta encontrar la salida.\n" + 
                         "Al cruzar la puerta principal, un mundo completamente desconocido se extiende ante tus ojos.\n" +                        
@@ -315,7 +346,7 @@ public class Juego {
         
     }
 
-    static public void segunoPaso(Objetos cuchillo, Objetos pocion, Personajes jugador){
+    public static void segunoPaso(Objetos cuchillo, Objetos pocion, Personajes jugador){
         //Random random = new Random();
         System.out.println("Tras la aplastante derrota contra el slime, ves como deja caer una pocion ");
         pausa(1000);
@@ -481,8 +512,22 @@ public class Juego {
                         "\n" + //
                         "¡Un No Muerto ha aparecido! ¡Prepárate para combatir!");
         pausa(1200);
+        System.out.println("       .-'''''''-.");
+        System.out.println("     .'           '.");
+        System.out.println("    /   _       O   \\");
+        System.out.println("   |   ( )   .---.   |");
+        System.out.println("   |       .'     '. |");
+        System.out.println("   |  O   /  X      \\|");
+        System.out.println("   |      \\         /");
+        System.out.println("    \\      '.___.' /");
+        System.out.println("     '.           .'");
+        System.out.println("       |  |   |  |");
+        System.out.println("       |  | | |  |");
+        System.out.println("       |  | | |  |");
+        System.out.println("       '._|_|_|_.'");
         Enemigos enemigo = generarNoMuerto();
-        nivel(jugador, combate(jugador, enemigo));
+        int experiencia = combate(jugador, enemigo);
+        nivel(jugador, experiencia);
 
     }
 
@@ -512,7 +557,7 @@ public class Juego {
     
 
 
-    static public boolean usarInventario(Personajes jugador, Enemigos enemigo) {
+    public static boolean usarInventario(Personajes jugador, Enemigos enemigo) {
         ArrayList<Objetos> inventario = jugador.getInventario();
 
         jugador.mostrarObjetos();
@@ -556,7 +601,7 @@ public class Juego {
         }
      }
 
-     static public void nivel(Personajes jugador, int experiencia){
+     public static void nivel(Personajes jugador, int experiencia){
         int experienciaFake = experiencia;
         if (experienciaFake >= 6 && experienciaFake < 13 ){
             experienciaFake = 6;
@@ -575,6 +620,9 @@ public class Juego {
             jugador.subirNivel();
         }
      }
+
+      
+    
 
     
 
